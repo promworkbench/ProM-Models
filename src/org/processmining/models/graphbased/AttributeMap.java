@@ -8,10 +8,16 @@ public class AttributeMap {
 	private final static String PREFIX = "ProM_Vis_attr_";
 
 	public enum ArrowType {
-		ARROWTYPE_CLASSIC(PREFIX + "arrow_classic"), ARROWTYPE_TECHNICAL(PREFIX + "arrow_tech"), ARROWTYPE_SIMPLE(
-				PREFIX + "arrow_simple"), ARROWTYPE_DIAMOND(PREFIX + "arrow_diamond"), ARROWTYPE_CIRCLE(PREFIX
-				+ "arrow_circle"), ARROWTYPE_LINE(PREFIX + "arrow_line"), ARROWTYPE_DOUBLELINE(PREFIX + "arrow_double"), ARROWTYPE_NONE(
-				PREFIX + "arrow_none");
+		ARROWTYPE_CLASSIC(PREFIX + "arrow_classic"), //
+		ARROWTYPE_TECHNICAL(PREFIX + "arrow_tech"), //
+		ARROWTYPE_SIMPLE(PREFIX + "arrow_simple"), //
+		ARROWTYPE_DIAMOND(PREFIX + "arrow_diamond"), //
+		ARROWTYPE_CIRCLE(PREFIX + "arrow_circle"), //
+		ARROWTYPE_LINE(PREFIX + "arrow_line"), //
+		ARROWTYPE_DOUBLELINE(PREFIX + "arrow_double"), //
+		ARROWTYPE_NONE(PREFIX + "arrow_none"), //
+		ARROW_CROSS(PREFIX + "arrow_cross"), //
+		ARROW_TECHNICAL_CIRCLE(PREFIX + "arrow_technical_circle");
 
 		ArrowType(String s) {
 		}
@@ -24,10 +30,16 @@ public class AttributeMap {
 	public final static String BORDERWIDTH = PREFIX + "border";
 	public final static String LABEL = PREFIX + "label";
 	public final static String TOOLTIP = PREFIX + "tooltip";
+
 	public final static String EDGESTART = PREFIX + "edgestart";
 	public final static String EDGESTARTFILLED = PREFIX + "edgeStartFilled";
+
 	public final static String EDGEEND = PREFIX + "edge end";
 	public final static String EDGEENDFILLED = PREFIX + "edgeEndFilled";
+
+	public final static String EDGEMIDDLE = PREFIX + "edge middle";
+	public final static String EDGEMIDDLEFILLED = PREFIX + "edgeMiddleFilled";
+
 	public final static String LABELVERTICALALIGNMENT = PREFIX + "labelVerticalAlignment";
 	public final static String EDGECOLOR = PREFIX + "edgeColor"; // added by arya
 	public final static String STROKECOLOR = PREFIX + "strokeColor"; // added by arya
@@ -43,6 +55,8 @@ public class AttributeMap {
 	 * A Float representing the linewidth of a line.
 	 */
 	public final static String LINEWIDTH = PREFIX + "lineWidth";
+	public final static String NUMLINES = PREFIX + "numLines";
+
 
 	public final static String STYLE = PREFIX + "style";
 
