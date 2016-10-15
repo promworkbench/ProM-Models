@@ -18,6 +18,7 @@ import org.processmining.models.graphbased.ExpansionListener;
 import org.processmining.models.graphbased.ExpansionListener.ListenerList;
 import org.processmining.models.graphbased.ViewSpecificAttributeMap;
 import org.processmining.models.graphbased.directed.DirectedGraph;
+import org.processmining.models.graphbased.directed.DirectedGraphElement;
 
 public class GraphLayoutConnection extends AbstractConnection implements DynamicConnection {
 
@@ -203,4 +204,15 @@ public class GraphLayoutConnection extends AbstractConnection implements Dynamic
 		return this;
 
 	}
+
+	protected static final String MULTIGRAPHELEMENTS = "multigraphelements";
+
+	public boolean setMultiGraphElements(AttributeMapOwner owner, List<DirectedGraphElement> tempGraphElements) {
+		return map.putViewSpecific(owner, MULTIGRAPHELEMENTS, tempGraphElements);
+	}
+
+	public List<DirectedGraphElement> getMultiGraphElements(AttributeMapOwner owner) {
+		return map.get(owner, MULTIGRAPHELEMENTS, Collections.<DirectedGraphElement>emptyList());
+	}
+
 }
