@@ -24,6 +24,8 @@ public class AttributeMap {
 	}
 
 	public final static String SHAPE = PREFIX + "shape";
+	public static final String SHAPEDECORATOR = PREFIX + "ShapeDecorator";
+
 	public final static String FILLCOLOR = PREFIX + "fillcolor";
 	public final static String GRADIENTCOLOR = PREFIX + "gradientcolor";
 	public final static String ICON = PREFIX + "icon";
@@ -56,7 +58,6 @@ public class AttributeMap {
 	 */
 	public final static String LINEWIDTH = PREFIX + "lineWidth";
 	public final static String NUMLINES = PREFIX + "numLines";
-
 
 	public final static String STYLE = PREFIX + "style";
 

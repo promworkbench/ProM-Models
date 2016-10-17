@@ -97,6 +97,14 @@ public class GraphLayoutConnection extends AbstractConnection implements Dynamic
 	private transient ExpansionListener.ListenerList expListeners = new ExpansionListener.ListenerList();
 	private transient List<Listener> listeners = new ArrayList<Listener>();
 
+	public GraphLayoutConnection(GraphLayoutConnection cloneFrom) {
+		super(cloneFrom.getLabel());
+		this.map = cloneFrom.map.createClone();
+		put(GRAPH, cloneFrom.get(GRAPH));
+		this.layedOut = cloneFrom.layedOut;
+
+	}
+
 	public GraphLayoutConnection(DirectedGraph<?, ?> graph) {
 		super("Layout information for " + graph.getLabel());
 		this.map = new ViewSpecificAttributeMap();

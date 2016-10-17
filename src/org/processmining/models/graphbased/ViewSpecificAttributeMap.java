@@ -106,4 +106,13 @@ public class ViewSpecificAttributeMap {
 		return m;
 	}
 
+	public ViewSpecificAttributeMap createClone() {
+		ViewSpecificAttributeMap map = new ViewSpecificAttributeMap();
+		for (AttributeMapOwner owner : maps.keySet()) {
+			for (String key : maps.get(owner).keySet()) {
+				map.putViewSpecific(owner, key, maps.get(owner).get(key));
+			}
+		}
+		return map;
+	}
 }
