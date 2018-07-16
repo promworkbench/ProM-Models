@@ -51,7 +51,7 @@ public abstract class AbstractDirectedGraph<N extends DirectedGraphNode, E exten
 
 	protected void checkAddEdge(N source, N target) {
 		Collection<N> nodes = getNodes();
-		if (!nodes.contains(source) && !nodes.contains(target)) {
+		if (!nodes.contains(source) || !nodes.contains(target)) {
 			throw new IllegalArgumentException("Cannot add an arc between " + source.toString() + " and "
 					+ target.toString() + ", since one of these nodes is not in the graph.");
 		}
