@@ -5,6 +5,9 @@
     	</description>
     </info>
     <dependencies>
+    
+       <!-- ProM license -->
        <dependency org="prom" name="ProM-Framework" rev="latest" changing="true" transitive="true" />
+       
     </dependencies>
 </ivy-module>
