@@ -2,6 +2,7 @@ package org.processmining.models.graphbased.directed.analysis;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.processmining.models.graphbased.directed.DirectedGraph;
@@ -23,6 +24,55 @@ public class ComponentFactory {
 	 */
 	public static <N extends DirectedGraphNode, E extends DirectedGraphEdge<? extends N, ? extends N>> Collection<Collection<N>> componentize(
 			DirectedGraph<N, E> graph) {
+		Set<N> toDo = new HashSet<N>(graph.getNodes());
+		Collection<Collection<N>> components = new HashSet<Collection<N>>();
+		while (!toDo.isEmpty()) {
+			// While there are nodes left to componentize, take the next node as current node.
+			N node = toDo.iterator().next();
+
+			// Get the successors
+			Set<N> successors = expand(graph, node, true);
+			// Get the predecessors
+			Set<N> predecessors = expand(graph, node, false);
+			// Take the conjunction of both.
+			predecessors.retainAll(successors);
+			// Add that as a new component.
+			System.out.println("[ComponentFactory] Node " + node.getLabel() + ": component " + predecessors);
+			components.add(predecessors);
+			
+			toDo.removeAll(predecessors);
+		}
+		return components;
+	}
+
+	private static <N extends DirectedGraphNode, E extends DirectedGraphEdge<? extends N, ? extends N>> Set<N> expand(DirectedGraph<N, E> graph, N node, boolean succ) {
+		Set<N> coldNodes = new HashSet<N>(); // Expanded nodes.
+		Set<N> warmNodes = new HashSet<N>(); // Nodes to expand in this round.
+		Set<N> hotNodes = new HashSet<N>(); // Nodes to expand in the next round.
+		warmNodes.add(node); // Add current node as node to expand.
+		while (!warmNodes.isEmpty()) {
+			// While there are nodes to expand, expand them.
+			coldNodes.addAll(warmNodes);
+			for (N warmNode : warmNodes) {
+				// Expand all the nodes to expand in this round.
+				for (E warmEdge : succ ? graph.getOutEdges(warmNode) : graph.getInEdges(warmNode)) {
+					N hotNode = succ ? warmEdge.getTarget() : warmEdge.getSource();
+					if (!coldNodes.contains(hotNode)) {
+						// New node, expand in the next round.
+						hotNodes.add(hotNode);
+					}
+				}
+			}
+			// Next round is about to become this round.
+			warmNodes.clear();
+			warmNodes.addAll(hotNodes); 
+			hotNodes.clear();
+		}
+		return coldNodes;
+	}
+	
+	public static <N extends DirectedGraphNode, E extends DirectedGraphEdge<? extends N, ? extends N>> Collection<Collection<N>> buggedComponentize(
+			DirectedGraph<N, E> graph) {
 		/**
 		 * The set of nodes to still componentize.
 		 */
@@ -34,8 +84,8 @@ public class ComponentFactory {
 		/**
 		 * Until no nodes need componentizing...
 		 */
-//		System.out.println("E: " + graph.getEdges().size());
-//		System.out.println("N: " + graph.getNodes().size());
+		//		System.out.println("E: " + graph.getEdges().size());
+		//		System.out.println("N: " + graph.getNodes().size());
 		while (!toDo.isEmpty()) {
 			/**
 			 * Take a node, and create a component for it.
@@ -45,8 +95,8 @@ public class ComponentFactory {
 			Collection<N> component = new TreeSet<N>();
 			component.add(node);
 			/**
-			 * Add the successors of this node, if possible (that is, if there
-			 * is some path from the successor to the selected node.
+			 * Add the successors of this node, if possible (that is, if there is some path
+			 * from the successor to the selected node.
 			 */
 			HashSet<N> reDo = new HashSet<N>();
 			Collection<E> edges = graph.getOutEdges(node);
@@ -57,17 +107,17 @@ public class ComponentFactory {
 			/**
 			 * Add the component.
 			 */
-//			System.out.println("REDO: " + reDo.size() + "    " + System.currentTimeMillis());
+			//			System.out.println("REDO: " + reDo.size() + "    " + System.currentTimeMillis());
 			components.add(component);
 			toDo.addAll(reDo);
-//			System.out.println("TODO: " + toDo.size() + "    " + System.currentTimeMillis());
+			//			System.out.println("TODO: " + toDo.size() + "    " + System.currentTimeMillis());
 		}
 		return components;
 	}
 
 	/**
-	 * Add all nodes reachable from the given node from which some node in the
-	 * given component is reachable.
+	 * Add all nodes reachable from the given node from which some node in the given
+	 * component is reachable.
 	 * 
 	 * @param <N>
 	 *            The type of nodes in the graph
@@ -101,9 +151,8 @@ public class ComponentFactory {
 				N succNode = edge.getTarget();
 				if (component.contains(succNode)) {
 					/**
-					 * Found a successor with a path to the component. Hence
-					 * there is a path from this node to the componetn as well.
-					 * Add it.
+					 * Found a successor with a path to the component. Hence there is a path from
+					 * this node to the componetn as well. Add it.
 					 */
 					added = true;
 					component.add(node);
@@ -112,8 +161,8 @@ public class ComponentFactory {
 				}
 			}
 			/**
-			 * Node has not been added to component. Hence, it should be
-			 * reconsidered in the future.
+			 * Node has not been added to component. Hence, it should be reconsidered in the
+			 * future.
 			 */
 			if (!added) {
 				reDo.add(node);
@@ -122,8 +171,8 @@ public class ComponentFactory {
 	}
 
 	/**
-	 * Checks whether a component is terminal, that is, whether it has no
-	 * outgoing edges.
+	 * Checks whether a component is terminal, that is, whether it has no outgoing
+	 * edges.
 	 * 
 	 * @param <N>
 	 *            The type of nodes in the graph
@@ -142,8 +191,7 @@ public class ComponentFactory {
 			for (E edge : edges) {
 				if (!component.contains(edge.getTarget())) {
 					/**
-					 * Found an edge leaving the component, hence it is not
-					 * terminal.
+					 * Found an edge leaving the component, hence it is not terminal.
 					 */
 					return false;
 				}
