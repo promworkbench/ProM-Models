@@ -1,0 +1,1 @@
+Folder to hold downloaded libraries and store resolved libraries.
