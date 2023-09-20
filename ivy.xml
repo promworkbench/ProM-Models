@@ -4,7 +4,11 @@
     		Version VERSION
     	</description>
     </info>
-    <dependencies>
+    <configurations>
+   		<conf name="default" extends="lib" />
+   		<conf name="lib" />
+	</configurations>  
+    <dependencies defaultconf="default">
     
        <!-- ProM license -->
        <dependency org="prom" name="ProM-Framework" rev="latest" changing="true" transitive="true" />
