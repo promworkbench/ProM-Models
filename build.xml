@@ -61,7 +61,7 @@
 		<pathelement path="${java.class.path}" />
 		<fileset dir=".">
 			<include name="ivy/**/*.jar" />
-			<include name="lib/**/*.jar" />
+			<!--include name="lib/**/*.jar" /-->
 			<include name="stdlib/**/*.jar" />
 			<include name="packagelib/**/*.jar" />
 		</fileset>
@@ -154,9 +154,9 @@
 				<fileset dir="${release}" includes="${project}-*-${os}.zip" />
 			</delete>
 			<zip destfile="${release}/${project}-${version}-${os}.zip">
-				<zipfileset dir="${lib}" prefix="lib">
+				<!--zipfileset dir="${lib}" prefix="lib">
 					<include name="**" />
-				</zipfileset>
+				</zipfileset-->
 				<zipfileset dir="${dist}" prefix="">
 					<include name="${project}.jar" />
 				</zipfileset>
@@ -166,9 +166,9 @@
 				<fileset dir="${release}/lib" includes="**/*" />
 			</delete>
 			<mkdir dir="${release}/lib" />
-			<copy todir="${release}/lib" overwrite="true">
+			<!--copy todir="${release}/lib" overwrite="true">
 				<fileset dir="${lib}" />
-			</copy>
+			</copy-->
 			<exec executable="grep">
 				<redirector output="ivypack.xml" />
 				<arg value="&lt;dependency .*org=&quot;prom&quot; " />
